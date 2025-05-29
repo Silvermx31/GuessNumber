@@ -38,8 +38,18 @@ public class View {
      * @return kasutaja sisestatud nr
      */
     public int askGuess() {
-        System.out.print("Sisesta number: ");
-        return Integer.parseInt(scanner.nextLine());
+        int number;
+        while (true) {
+            System.out.print("Sisesta number: ");
+            String input = scanner.nextLine();
+            try {
+                number = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Viga! Palun sisesta reaalne number.");
+            }
+        }
+        return number;
     }
 
     /**

@@ -37,9 +37,12 @@ public class Controller {
                     }
                     stopwatch.stop();   //Peata stopper
                     // Näita aega järgmnevalt: "Mängu aeg: 00:00:00 (000000)
-                    view.showMessage("Mängu aeg " + stopwatch.getElapsedTime() + " ("+ stopwatch.getElapsedMillis() +")");
-                    String name = view.askName();   //Küsi nime
-                    model.saveScore(name);
+                    if (model.getSteps() == 1000) {
+                        view.showMessage("Tagauks avatud – tulemust ei salvestata.");
+                    } else {
+                        String name = view.askName();   // Küsi nimi ainult siis, kui pole tagauks
+                        model.saveScore(name, stopwatch.getElapsedMillis());
+                    }
                     break;
                 case 2:
                     // Näita edetabelit

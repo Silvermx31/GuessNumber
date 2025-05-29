@@ -10,46 +10,51 @@ public class Stopwatch {
      * Käivitab stopperi
      */
     public void start() {
-        if(!running) {
+        if (!running) {
             startTime = System.currentTimeMillis();
             running = true;
         }
     }
+
     /**
-     * Peatab stopperi
+     * Peatab stopperi ja summeerib aja
      */
     public void stop() {
-        if(running) {
-            elapsedTime = System.currentTimeMillis() - startTime;
+        if (running) {
+            elapsedTime += System.currentTimeMillis() - startTime;
             running = false;
         }
     }
 
     /**
-     * Tagastab vormindatud mänguaja 00:00:00
-     * @return vormindatud aeg
+     * Tagastab vormindatud mänguaja kujul 00:00:00
      */
     public String getElapsedTime() {
-        long totalMillis = elapsedTime;
-        if(running) {
-            totalMillis = System.currentTimeMillis() - startTime;
-        }
+        long totalMillis = getElapsedMillis();
         long seconds = totalMillis / 1000;
         long hours = seconds / 3600;
         long minutes = (seconds % 3600) / 60;
         long secs = seconds % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, secs);   // 00:00:00 ehk 02 ja d ehk digit-täisarv
+        return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
     /**
      * Tagastab mänguaja millisekundites
-     * @return  Mängu aeg
      */
     public long getElapsedMillis() {
-        long totalMillis = elapsedTime;
-        if(running) {
-            totalMillis = System.currentTimeMillis() - startTime;
+        if (running) {
+            return elapsedTime + (System.currentTimeMillis() - startTime);
+        } else {
+            return elapsedTime;
         }
-        return totalMillis;
+    }
+
+    /**
+     * Lähtestab stopperi nulli
+     */
+    public void reset() {
+        startTime = 0;
+        elapsedTime = 0;
+        running = false;
     }
 }
